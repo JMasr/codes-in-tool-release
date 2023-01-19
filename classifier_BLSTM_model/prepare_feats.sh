@@ -1,13 +1,18 @@
-feature_config=$1
-scp=$2
-outdir=$3
+#!/bin/bash
 
-#feature_config should be conf/feature_config.
-#
-# scp shd be a data/<audio-cat>/dev.scpdata/breathing-deep.scp/dev.scp).
-#
-#finally,outdir shd be feats/<audio_cat> (e.g. feats/breathing-deep)
-#
-#so, this code shd be run seperately for 9 audio categories (breathing-deep etc.)
-mkdir -p $outdir
-python local/feature_extraction.py -c $feature_config -f $scp -o $outdir
+# Make the feats of an audio categori
+audioArray=("breathing-deep" "breathing-shallow" "cough-heavy" "cough-shallow" "counting-normal" "counting-fast" "vowel-a" "vowel-e" "vowel-o")
+for audio_cat in ${audioArray[@]}; do
+  mkdir -p feats/$audio_cat
+done
+
+feature_config=conf/feature_config
+python local/feature_extraction.py -c $feature_config -f data/breathing-deep/dev.scp -o feats/breathing-deep &\
+python local/feature_extraction.py -c $feature_config -f data/breathing-shallow/dev.scp -o feats/breathing-shallow
+python local/feature_extraction.py -c $feature_config -f data/cough-heavy/dev.scp -o feats/cough-heavy &\
+python local/feature_extraction.py -c $feature_config -f data/cough-shallow/dev.scp -o feats/cough-shallow &\
+python local/feature_extraction.py -c $feature_config -f data/counting-normal/dev.scp -o feats/counting-normal &\
+python local/feature_extraction.py -c $feature_config -f data/counting-fast/dev.scp -o feats/counting-fast &\
+python local/feature_extraction.py -c $feature_config -f data/vowel-a/dev.scp -o feats/vowel-a &\
+python local/feature_extraction.py -c $feature_config -f data/vowel-e/dev.scp -o feats/vowel-e &\
+python local/feature_extraction.py -c $feature_config -f data/vowel-o/dev.scp -o feats/vowel-o
