@@ -2,7 +2,7 @@
 *.wav
 *.flac
 *.mp3
-
+*.scp
 #ignore the Dataset directory
 **/Dataset/
 

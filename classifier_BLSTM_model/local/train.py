@@ -1,14 +1,20 @@
-import argparse, configparser
+import argparse
+import configparser
+
+import os
+import sys
+import random
+import datetime
+
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
 import torch.optim as optim
+
 from dataset import *
 from models import *
 from utils import *
-import os, sys
-import datetime
-import random
+
 
 random.seed(42)
 np.random.seed(42)
@@ -74,16 +80,16 @@ def main(train_config, model_configfil, featsfil, train_fil, val_fil, outdir, in
 
     model = getNet(model_args['architecture'])(model_args)
 
-    if True: #init_model is not None:
-        model.load_state_dict(torch.load('/home/jmramirez/Documentos/COPERIA/codes-in-tool-release/classifier_BLSTM_model/results/breathing-deep/models/final.mdl', map_location='cpu'))
+    if init_model is not None:
+        model.load_state_dict(torch.load(init_model, map_location='cpu'))
         print('initialized using the model {}'.format(init_model))
 
-    if True: #init_encoder is not None:
+    if init_encoder is not None:
         encoder_weights = torch.load(init_encoder, map_location='cpu')
         model.init_encoder(encoder_weights)
         print("Encoder initialized using " + init_encoder)
 
-    if True: #init_classifier is not None:
+    if init_classifier is not None:
         classifier_weights = torch.load(init_classifier, map_location='cpu')
         model.init_classifier(classifier_weights)
         print("Encoder initialized using " + init_classifier)
@@ -112,7 +118,8 @@ def main(train_config, model_configfil, featsfil, train_fil, val_fil, outdir, in
     print(optimizer)
 
     if train_config['training']['lr_scheme'] == 'ExponentialLR':
-        scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=float(train_config['training']['learning_rate_decay']))
+        scheduler = optim.lr_scheduler.ExponentialLR(optimizer,
+                                                     gamma=float(train_config['training']['learning_rate_decay']))
     elif train_config['training']['lr_scheme'] == 'ReduceLROnPlateau':
         scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer,
                                                          factor=float(train_config['training']['learning_rate_decay']))
@@ -126,12 +133,13 @@ def main(train_config, model_configfil, featsfil, train_fil, val_fil, outdir, in
     for epoch in range(1, n_epochs + 1):
         print(datetime.datetime.now())
 
-        train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=int(train_config['training']['batch_size']),
+        train_data_loader = torch.utils.data.DataLoader(train_dataset,
+                                                        batch_size=int(train_config['training']['batch_size']),
                                                         shuffle=True, collate_fn=train_dataset.collate)
 
         val_data_loader = torch.utils.data.DataLoader(validation_dataset,
-                                                      batch_size=int(train_config['training']['batch_size']), shuffle=False,
-                                                      collate_fn=validation_dataset.collate)
+                                                      batch_size=int(train_config['training']['batch_size']),
+                                                      shuffle=False, collate_fn=validation_dataset.collate)
 
         train_loss = train(model, train_data_loader, optimizer, epoch)
         training_loss.append(train_loss)

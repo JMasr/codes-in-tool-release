@@ -22,7 +22,7 @@ for audiocategory in ${audioCategories[@]}; do
 
     echo "==== Feature extraction ====="
     mkdir -p $feature_dir
-    python feature_extraction.py -c $feats_config -i $datadir/all.scp -o $feature_dir
+    #python feature_extraction.py -c $feats_config -i $datadir/all.scp -o $feature_dir
     cp $feature_dir/feats.scp $datadir/feats.scp
   fi
 
@@ -51,10 +51,6 @@ for audiocategory in ${audioCategories[@]}; do
       python infer.py --modelfil $output_dir/model.pkl --featsfil $datadir/feats.scp --file_list $datadir/test2.scp --outfil $output_dir/test2_scores.txt
       # Score
       python scoring.py --ref_file $datadir_name/test2 --target_file $output_dir/test2_scores.txt --output_file $output_dir/test2_results.pkl
-
-      python infer.py --modelfil $output_dir/model.pkl --featsfil $datadir/feats.scp --file_list $datadir/test1_test2.scp --outfil $output_dir/test1_test2_scores.txt
-      # Score
-      python scoring.py --ref_file $datadir_name/test1_test2 --target_file $output_dir/test1_test2_scores.txt --output_file $output_dir/test1_test2_results.pkl
 
     done
 
@@ -87,10 +83,6 @@ for audiocategory in ${audioCategories[@]}; do
       # Score
       python scoring.py --ref_file $datadir_name/test2 --target_file $output_dir/test2_scores.txt --output_file $output_dir/test2_results.pkl
 
-      python infer.py --modelfil $output_dir/model.pkl --featsfil $datadir/feats.scp --file_list $datadir/test1_test2.scp --outfil $output_dir/test1_test2_scores.txt
-      # Score
-      python scoring.py --ref_file $datadir_name/test1_test2 --target_file $output_dir/test1_test2_scores.txt --output_file $output_dir/test1_test2_results.pkl
-
     done
 
   fi
@@ -121,10 +113,6 @@ for audiocategory in ${audioCategories[@]}; do
       python infer.py --modelfil $output_dir/model.pkl --featsfil $datadir/feats.scp --file_list $datadir/test2.scp --outfil $output_dir/test2_scores.txt
       # Score
       python scoring.py --ref_file $datadir_name/test2 --target_file $output_dir/test2_scores.txt --output_file $output_dir/test2_results.pkl
-
-      python infer.py --modelfil $output_dir/model.pkl --featsfil $datadir/feats.scp --file_list $datadir/test1_test2.scp --outfil $output_dir/test1_test2_scores.txt
-      # Score
-      python scoring.py --ref_file $datadir_name/test1_test2 --target_file $output_dir/test1_test2_scores.txt --output_file $output_dir/test1_test2_results.pkl
 
     done
 
