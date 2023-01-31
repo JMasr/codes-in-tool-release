@@ -20,7 +20,7 @@ if [ $stage -le 0 ];then
 	cp $feature_config $results_directory/feature_config
 	cp $model_config $results_directory/model_config
 
-	for audio in cough-heavy cough-shallow breathing-deep breathing-shallow vowel-a vowel-e vowel-o counting-normal counting-fast;do
+	for audio in breathing-deep counting-normal cough-heavy cough-shallow breathing-deep breathing-shallow vowel-a vowel-e vowel-o counting-normal counting-fast;do
 		result_folder=${results_directory}/${audio}
 		mkdir -p $result_folder
 		echo "=================== Train on dev data============================="
