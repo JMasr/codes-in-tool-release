@@ -22,7 +22,6 @@ for audio_cat in cough-heavy cough-shallow breathing-deep breathing-shallow vowe
   mkdir -p feats/$audio_cat
 done
 
-echo "Make the feats of an audio categories"
 feature_config=conf/feature_config
 python local/feature_extraction.py -c $feature_config -f data/breathing-deep/dev.scp -o feats/breathing-deep &\
 python local/feature_extraction.py -c $feature_config -f data/breathing-shallow/dev.scp -o feats/breathing-shallow
