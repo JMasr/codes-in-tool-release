@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Dec 12 21:15:54 2020
+
+@author: DiCOVA Team
+
+Edited on 2022
+
+@author: José Manuel - GTM Team
+"""
+
 import argparse, configparser
 import pickle, random
 import numpy as np
@@ -50,7 +62,7 @@ def main(config,datadir,outdir):
 	train_feats,train_labels = get_data(datadir+"/train.scp",datadir+"/feats.scp",datadir.split("/")[0]+"/train", shuffle=True)
 	train_labels = np.array([int(i) for i in train_labels])
 	model_type = config['default']['model']
-	verbose = True if config[model_type]['verbose'] in ['True','TRUE','true','1'] else False
+	verbose = True
 	cw = config[model_type]['class_weight']
 	cw = cw if 'balanced' in cw else None
 	if model_type == 'LogisticRegression':
@@ -82,7 +94,7 @@ def main(config,datadir,outdir):
 						'verbose': verbose,
 						'probability': True,
 						'random_state':int(config['default']['seed'])}
-		model = linSVM(model_args)
+		model = LinSVM(model_args)
 		model.run_fit(train_feats,train_labels)
 
 	elif model_type == 'MLP':

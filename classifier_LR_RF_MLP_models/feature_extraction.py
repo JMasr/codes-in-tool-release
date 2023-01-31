@@ -1,4 +1,17 @@
-import argparse, configparser
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Dec 12 21:15:54 2020
+
+@author: DiCOVA Team
+
+Edited on 2022
+
+@author: José Manuel - GTM Team
+"""
+
+import argparse
+import configparser
 import pickle
 import librosa
 import numpy as np
