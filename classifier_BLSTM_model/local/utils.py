@@ -1,15 +1,11 @@
-import os
 import random
 import string
 import subprocess
-import numpy as np
-import torch.nn as nn
-import torch, torchaudio
-from sklearn.metrics import auc
+
+import torch
+import torchaudio
 
 from scoring import *
-
-from pdb import set_trace as bp
 
 
 # %%
@@ -31,11 +27,11 @@ def to_dict(filename):
 
 
 def ArithemeticMeanFusion(scores, weight=None):
-    '''
-	Artihmetic mean fusion of scores
-	scores: is a list of dictionaries with scores as key,value pairs
-	weights: list of weights
-	'''
+    """
+    Artihmetic mean fusion of scores
+    scores: is a list of dictionaries with scores as key,value pairs
+    weights: list of weights
+    """
     if weight == None:
         weight = [1 / len(scores) for i in range(len(scores))]
     assert len(weight) == len(scores)
@@ -76,14 +72,14 @@ def compute_SAD(sig, fs, threshold=0.0001, sad_start_end_sil_length=100, sad_mar
     return sad
 
 
-class feature_extractor():
-    ''' Class for feature extraction
-	args: input arguments dictionary
-	Mandatory arguments: resampling_rate, feature_type, window_size, hop_length
-	For MFCC: f_max, n_mels, n_mfcc
-	For MelSpec/logMelSpec: f_max, n_mels		
-	Optional arguments: compute_deltas, compute_delta_deltas
-	'''
+class FeatureExtractor:
+    """ Class for feature extraction
+    args: input arguments dictionary
+    Mandatory arguments: resampling_rate, feature_type, window_size, hop_length
+    For MFCC: f_max, n_mels, n_mfcc
+    For MelSpec/logMelSpec: f_max, n_mels
+    Optional arguments: compute_deltas, compute_delta_deltas
+    """
 
     def __init__(self, args):
 
@@ -123,13 +119,13 @@ class feature_extractor():
             raise ValueError('Feature type not implemented')
 
     def _read_audio(self, filepath):
-        ''' This code does the following:
-		1. Read audio, 
-		2. Resample the audio if required, 
-		3. Perform waveform normalization,
-		4. Compute sound activity using threshold based method
-		5. Discard the silence regions
-		'''
+        """ This code does the following:
+        1. Read audio,
+        2. Resample the audio if required,
+        3. Perform waveform normalization,
+        4. Compute sound activity using threshold based method
+        5. Discard the silence regions
+        """
         s, fs = torchaudio.load(filepath)
         if fs != self.resampling_rate:
             s, fs = torchaudio.sox_effects.apply_effects_tensor(s, fs, [['rate', str(self.resampling_rate)]])

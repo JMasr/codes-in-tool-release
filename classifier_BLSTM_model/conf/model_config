@@ -4,6 +4,7 @@ architecture = LSTMClassifier
 apply_mean_norm = False
 apply_var_norm = False
 
+input_dimension = 192
 lstm_encoder_units = 128
 lstm_num_layers = 2
 lstm_bidirectional = True
