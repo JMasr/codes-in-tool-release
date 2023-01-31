@@ -20,15 +20,15 @@ if [ $stage -le 0 ];then
 	cp $feature_config $results_directory/feature_config
 	cp $model_config $results_directory/model_config
 
-	for audio in breathing-deep counting-normal cough-heavy cough-shallow breathing-deep breathing-shallow vowel-a vowel-e vowel-o counting-normal counting-fast;do
+	for audio in breathing-deep vowel-e vowel-o counting-normal cough-heavy cough-shallow breathing-deep breathing-shallow vowel-a vowel-e vowel-o counting-normal counting-fast;do
 		result_folder=${results_directory}/${audio}
 		mkdir -p $result_folder
 		echo "=================== Train $audio model============================="
 		mkdir -p $result_folder
-		python local/train.py -c $results_directory/train_config -m $results_directory/model_config -f $featsdir/$audio/feats.scp -t $datadir/train -v $datadir/val -o $result_folder
+		#python local/train.py -c $results_directory/train_config -m $results_directory/model_config -f $featsdir/$audio/feats.scp -t $datadir/train -v $datadir/val -o $result_folder
 
 		for item in val test1 test2;do
-			python local/infer.py -c $results_directory/train_config -f $results_directory/feature_config -m $result_folder/models/final.pt -i $datadir/$audio/${item}.scp -o $result_folder/${item}_scores.txt
+			python local/infer.py -c $results_directory/train_config -f $results_directory/feature_config -M $results_directory/model_config -m $result_folder/models/final.pt -i $datadir/$audio/${item}.scp -o $result_folder/${item}_scores.txt
 			python local/scoring.py -r $datadir/$item -t $result_folder/${item}_scores.txt -o $result_folder/${item}_results.pkl
 		done
 	done

@@ -2,6 +2,8 @@ import os
 import argparse
 from configparser import ConfigParser
 
+from tqdm import tqdm
+
 from models import getNet, torch
 from utils import convertType, FeatureExtractor, modify_raw_directory
 
@@ -46,7 +48,8 @@ def inference(model_path: str, file_list: str, output_path: str,
     scores = {}
     file_list = open(file_list).readlines()
     file_list = [line.strip().split() for line in file_list]
-    for fileId, path in file_list:
+
+    for fileId, path in tqdm(file_list):
         # Prepare features
         try:
             F = FE.extract(path)

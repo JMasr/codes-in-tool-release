@@ -5,7 +5,7 @@ old_path=$1
 new_path=$2
 
 # Check the two arguments are provided
-if [ $# -ne 1 ]; then
+if [ $# -e 2 ]; then
     echo "Old path: $old_path"
     echo "New path: $new_path"
 
@@ -23,7 +23,7 @@ for audio_cat in cough-heavy cough-shallow breathing-deep breathing-shallow vowe
 done
 
 feature_config=conf/feature_config
-for dataset in train dev test; do
+for dataset in train dev; do
   echo "Processing $dataset"
   python local/feature_extraction.py -c $feature_config -f data/breathing-deep/dev.scp -o feats/breathing-deep &\
   python local/feature_extraction.py -c $feature_config -f data/breathing-shallow/dev.scp -o feats/breathing-shallow
