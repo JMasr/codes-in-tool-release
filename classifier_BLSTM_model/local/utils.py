@@ -1,3 +1,4 @@
+import os
 import random
 import string
 import subprocess
@@ -317,7 +318,6 @@ def train(model, data_loader, optimizer, epoch, debug=False):
     return total_train_loss / (batch_id + 1)
 
 
-# %%
 def validate(model, data_loader):
     ''' Do validation and compute loss
 		The scores and labels are also stacked to facilitate AUC computation
@@ -349,3 +349,22 @@ def reset_model(model):
             for layer in layers:
                 if hasattr(layer, 'reset_parameters'): layer.reset_parameters()
     return model
+
+
+# %% spc tools
+def modify_raw_directory(data_directory: str, old_path: str, new_path: str):
+    """
+    Modify in all the *.scp files the path of the wav files.
+    @param data_directory: the directory where the *.scp files are located
+    @param old_path: the old path of the wav files
+    @param new_path: The path to replace in all the *.scp files.
+    @return new *.scp files with the new path.
+    """
+    for root, dirs, files in os.walk(data_directory):
+        for file in files:
+            if file.endswith(".scp"):
+                with open(os.path.join(root, file), 'r') as f:
+                    lines = f.readlines()
+                with open(os.path.join(root, file), 'w') as f:
+                    for line in lines:
+                        f.write(line.replace(old_path, new_path))

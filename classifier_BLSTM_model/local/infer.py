@@ -3,10 +3,7 @@ import argparse
 from configparser import ConfigParser
 
 from models import getNet, torch
-from utils import convertType, FeatureExtractor
-
-
-
+from utils import convertType, FeatureExtractor, modify_raw_directory
 
 
 def inference(model_path: str, file_list: str, output_path: str,
