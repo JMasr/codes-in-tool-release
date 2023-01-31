@@ -24,9 +24,7 @@ if [ $stage -le 0 ];then
 		result_folder=${results_directory}/${audio}
 		mkdir -p $result_folder
 		echo "=================== Train on dev data============================="
-
 		mkdir -p $result_folder
-
 		python local/train.py -c $results_directory/train_config -m $results_directory/model_config -f $featsdir/$audio/feats.scp -t $datadir/train -v $datadir/val -o $result_folder
 
 		for item in val test1 test2;do

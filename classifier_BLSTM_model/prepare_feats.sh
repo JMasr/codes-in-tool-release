@@ -23,12 +23,15 @@ for audio_cat in cough-heavy cough-shallow breathing-deep breathing-shallow vowe
 done
 
 feature_config=conf/feature_config
-python local/feature_extraction.py -c $feature_config -f data/breathing-deep/dev.scp -o feats/breathing-deep &\
-python local/feature_extraction.py -c $feature_config -f data/breathing-shallow/dev.scp -o feats/breathing-shallow
-python local/feature_extraction.py -c $feature_config -f data/cough-heavy/dev.scp -o feats/cough-heavy &\
-python local/feature_extraction.py -c $feature_config -f data/cough-shallow/dev.scp -o feats/cough-shallow &\
-python local/feature_extraction.py -c $feature_config -f data/counting-normal/dev.scp -o feats/counting-normal &\
-python local/feature_extraction.py -c $feature_config -f data/counting-fast/dev.scp -o feats/counting-fast &\
-python local/feature_extraction.py -c $feature_config -f data/vowel-a/dev.scp -o feats/vowel-a &\
-python local/feature_extraction.py -c $feature_config -f data/vowel-e/dev.scp -o feats/vowel-e &\
-python local/feature_extraction.py -c $feature_config -f data/vowel-o/dev.scp -o feats/vowel-o
+for dataset in train dev test; do
+  echo "Processing $dataset"
+  python local/feature_extraction.py -c $feature_config -f data/breathing-deep/dev.scp -o feats/breathing-deep &\
+  python local/feature_extraction.py -c $feature_config -f data/breathing-shallow/dev.scp -o feats/breathing-shallow
+  python local/feature_extraction.py -c $feature_config -f data/cough-heavy/dev.scp -o feats/cough-heavy &\
+  python local/feature_extraction.py -c $feature_config -f data/cough-shallow/dev.scp -o feats/cough-shallow &\
+  python local/feature_extraction.py -c $feature_config -f data/counting-normal/dev.scp -o feats/counting-normal &\
+  python local/feature_extraction.py -c $feature_config -f data/counting-fast/dev.scp -o feats/counting-fast &\
+  python local/feature_extraction.py -c $feature_config -f data/vowel-a/dev.scp -o feats/vowel-a &\
+  python local/feature_extraction.py -c $feature_config -f data/vowel-e/dev.scp -o feats/vowel-e &\
+  python local/feature_extraction.py -c $feature_config -f data/vowel-o/dev.scp -o feats/vowel-o
+done

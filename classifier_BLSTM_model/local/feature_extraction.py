@@ -9,20 +9,21 @@ from utils import *
 # %%
 def main(config, filelist, outdir):
     """ This function just loops over all the files in the file list
-	The file list is in the form:
-	<id1> <file_path>
-	<id2> <file_path>
-	......
-	<idN> <file_path>
+    The file list is in the form:
+    <id1> <file_path>
+    <id2> <file_path>
+    ......
+    <idN> <file_path>
 
-	Extracted features are stored in outdir as pkl file with id*.pkl as the file name
-	"""
+    Extracted features are stored in outdir as pkl file with id*.pkl as the file name
+    """
     temp = open(filelist).readlines()
     filepaths = {}
     for line in temp:
         idx, path = line.strip().split()
         filepaths[idx] = path
     FE = FeatureExtractor(config['default'])
+
     featlist = []
     for item in filepaths:
         outname = '{}/{}.pkl'.format(outdir, item)
