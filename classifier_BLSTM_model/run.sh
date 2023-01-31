@@ -23,7 +23,7 @@ if [ $stage -le 0 ];then
 	for audio in breathing-deep counting-normal cough-heavy cough-shallow breathing-deep breathing-shallow vowel-a vowel-e vowel-o counting-normal counting-fast;do
 		result_folder=${results_directory}/${audio}
 		mkdir -p $result_folder
-		echo "=================== Train on dev data============================="
+		echo "=================== Train $audio model============================="
 		mkdir -p $result_folder
 		python local/train.py -c $results_directory/train_config -m $results_directory/model_config -f $featsdir/$audio/feats.scp -t $datadir/train -v $datadir/val -o $result_folder
 
