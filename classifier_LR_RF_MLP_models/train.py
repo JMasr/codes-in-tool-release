@@ -93,7 +93,7 @@ def main(config,datadir,outdir):
 						'class_weight':cw,
 						'verbose': verbose,
 						'probability': True,
-						'random_state':int(config['default']['seed'])}
+						'random_state': 42}
 		model = LinSVM(model_args)
 		model.run_fit(train_feats,train_labels)
 
