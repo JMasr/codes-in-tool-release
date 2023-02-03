@@ -5,7 +5,7 @@ old_path=$1
 new_path=$2
 
 # Check the two arguments are provided
-if [ $# -e 2 ]; then
+if [ $# -eq 2 ]; then
     echo "Old path: $old_path"
     echo "New path: $new_path"
 
