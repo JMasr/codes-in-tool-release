@@ -1,8 +1,9 @@
-import argparse
-import configparser
 import os
 import pickle
+import argparse
+import configparser
 
+from tqdm import tqdm
 from utils import *
 
 
@@ -28,7 +29,7 @@ def main(feat_config, filelist, outdir):
     FE = FeatureExtractor(feat_config['default'])
     # Making the feats
     featlist = []
-    for item in tdqm(filepaths):
+    for item in tqdm(filepaths):
         outname = '{}/{}.pkl'.format(outdir, item)
         if not os.path.exists(outname):
             F = FE.extract(filepaths[item])
