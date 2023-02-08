@@ -9,7 +9,7 @@ if [ $# -eq 2 ]; then
     echo "Old path: $old_path"
     echo "New path: $new_path"
 
-    for file in `find ./data/ -name "*.scp" -type f`; do
+    for file in `find ./data_coswara_all/ -name "*.scp" -type f`; do
         echo "Processing $file"
         sed -i "s+$old_path+$new_path+g" "$file"
     done
