@@ -13,7 +13,7 @@ Edited on 2022
 import argparse, configparser
 import pickle, random
 import numpy as np
-from models import *
+from src.models import *
 from pdb import set_trace as bp
 
 def get_data(file_list,feats_file,labels_file,shuffle=False):

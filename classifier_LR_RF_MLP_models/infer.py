@@ -13,7 +13,7 @@ Edited on 2022
 import argparse
 import pickle
 import numpy as np
-from models import *
+from src.models import *
 from pdb import set_trace as bp
 
 def main(modelfil,file_list,featsfil,outfil):

@@ -8,7 +8,7 @@ Created on Wed May 19 14:32:50 2021
 
 import os,sys
 from scoring import *
-from utils import *
+from src.utils import *
 
 def do_score_fusion(ffolders,outscores,normalize=False,weights=None):
 #%%
