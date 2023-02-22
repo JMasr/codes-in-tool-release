@@ -3,7 +3,7 @@ stage=0
 
 audioCategories=("breathing-deep" "breathing-shallow" "cough-heavy" "cough-shallow" "counting-normal" "counting-fast" "vowel-a" "vowel-e" "vowel-o")
 
-for audiocategory in ${audioCategories[@]}; do
+for audiocategory in "${audioCategories[@]}"; do
   datadir_name='data'
   datadir=$datadir_name/$audiocategory
   feature_dir_name='feats'
@@ -11,7 +11,7 @@ for audiocategory in ${audioCategories[@]}; do
   output_dir='results'
 
   train_config='conf/train.conf'
-  feats_config='conf/feature.conf'
+  #feats_config='conf/feature.conf'
 
   . parse_options.sh
 
@@ -21,7 +21,7 @@ for audiocategory in ${audioCategories[@]}; do
     # feature.conf specifies configuration settings for feature extraction
 
     echo "==== Feature extraction ====="
-    mkdir -p $feature_dir
+    mkdir -p "$feature_dir"
     #python feature_extraction.py -c $feats_config -i $datadir/all.scp -o $feature_dir
     cp $feature_dir/feats.scp $datadir/feats.scp
   fi
